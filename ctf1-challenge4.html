@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I believe you can't fly</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="prism.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="assets/icons/tomato.png" alt="Tomate">
+            <div class="pseudo">Nektow</div>
+        </div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="tools.html">Tools</a></li>
+            <li><a href="history.html">History</a></li>
+        </ul>
+        <div class="social-icons">
+            <a href="#"><img src="assets/icons/tryhackme.png" alt="TryHackMe"></a>
+            <a href="#"><img src="assets/icons/rootme.png" alt="RootMe"></a>
+            <a href="#"><img src="assets/icons/hackthebox.png" alt="HackTheBox"></a>
+        </div>
+    </div>   
+    <div class="main-content">
+        <h1>I believe you can't fly</h1>
+        <p>In the world of Featherstone Airways, where airships dominate the skies and steam-powered engines hum in harmony with the winds, disaster strikes aboard Flight 404. A cacophony of alarms blares through the cabin, and an automated voice pierces the tension:
+"Alert: Navigation systems compromised. Manual override unavailable."
+        </br>
+        </br>
+        The captain, drenched in sweat, confesses that the ship’s intricate steam-core systems have been infiltrated by rogue machinists. The autopilot is spewing erratic commands, and the controls have been rendered useless. Amid the chaos, your gaze falls upon a forgotten device—a mechanical tablet left behind by the ship’s chief engineer. Its dimly glowing screen is your only hope to uncover the secrets of this sabotage and reclaim control of the vessel.
+        </br>
+        </br>
+        The tablet appears to hold critical files containing traces of the hackers’ interference. To restore the autopilot and prevent the airship from plunging into the abyss, you must uncover the password hidden within these files. As the last passenger with a keen mind for cyber-steam security, it falls to you to analyze these files, piece together the password, and save the airship before it’s too late. Time is of the essence, and the lives of everyone aboard rest in your hands. Will you rise to the challenge and prove yourself the hero of the skies ?
+        </p>
+        <h2>Writeup</h2>
+        <p>Here is solution's steps :</p>
+        <li>Download the <a href="https://raw.githubusercontent.com/ChallengeHackDay/qualif-2025/refs/heads/main/FORENSIC/I believe you can't fly/chall/FlyHigh.zip">zip file. </a></li>
+        <p>sha256: b0fcb186475c7548adb7be66c2519bb11f0d6e1ebed997281fde8c0c923434d2</p>
+        <li>Unzip it </li>
+            <img src="assets/images/hackday_chall_flyhigh.png">
+            <li>We will take a look at the first file plane_logs.txt.</li>
+            <img src="assets/images/hackday_chall_flyhigh1.png">
+            <li>We have some encoded strings let's extract all of them </li>
+            <p>Now we have a file which contain some encoded strings </p> 
+            <img src="assets/images/hackday_chall_flyhigh2.png">
+            <li>Let's decode them using Cyberchef or Decode </li>
+            <img src="assets/images/hackday_chall_flyhigh3.png">
+            <p>The last string look like a flag's begining</p>
+            <li> Now we will investigate the next file "say_hi.jpg" </li>
+            <img src="assets/images/hackday_chall_flyhigh4.png">
+            <p>Nothing there let's use stegseek on it with the legendary wordlist rockyou !</p>
+            <img src="assets/images/hackday_chall_flyhigh5.png">
+            <p>Nice we found a password !</p>
+            <li>Let's see what we just extracted</li>
+            <img src="assets/images/hackday_chall_flyhigh6.png">
+            <p>It looks like the second part's flag</p>
+            <li>Now we just have to assemble it </p>
+            <h2>Flag</h2>
+            <p class="flag">HACKDAY{aM_@_fR3E-@LbaRT0s5}</p>
+    </div>
+</body>
+</html>

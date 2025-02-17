@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What was I doing</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="prism.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="assets/icons/tomato.png" alt="Tomate">
+            <div class="pseudo">Nektow</div>
+        </div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="tools.html">Tools</a></li>
+            <li><a href="history.html">History</a></li>
+        </ul>
+        <div class="social-icons">
+            <a href="#"><img src="assets/icons/tryhackme.png" alt="TryHackMe"></a>
+            <a href="#"><img src="assets/icons/rootme.png" alt="RootMe"></a>
+            <a href="#"><img src="assets/icons/hackthebox.png" alt="HackTheBox"></a>
+        </div>
+    </div>   
+    <div class="main-content">
+        <h1>What was I doing</h1>
+        <p>Edgar would like you to determine what he was doing just before leaving. According to his memory, he was conducting research, but on what...? Checkout what the user was researching before he left.
+        </br>
+        </br>
+        Do not run it as a VM it'll change files inside !
+        </br>
+        </br>
+        sha256: bbd71d5e0435d0abc75d3b969318605bced8ffd847064a65ca9d930769bf61cf
+        </p>
+        <p>You can download the file <a href="https://challenges.s3.rbx.io.cloud.ovh.net/challenges/vm-106-disk-0.qcow2">here</a></p>
+        <h2>Writeup</h2>
+        <p>Here is the step by step solution</p>
+            <li>First, check the file type</li>
+            <img src="assets/images/hackday_chall_whatwasidoing.png">
+            <p>It seems to be a qemu image </p>
+            <li>Let's mount it</li>
+            <p>Enable NBD on the Host</p>
+            <pre><code class="language-python">modprobe nbd max_part=8</code></pre>
+            <p>Connect the QCOW2 as network block device</p>
+            <pre><code class="language-python">qemu-nbd --connect /dev/nbd0 vm-106-disk-0.qcow2</code></pre> 
+            <p>Mount the partition from the VM</p>
+            <pre><code class="language-python">mount /dev/nbd0p1 /mnt/"mount_point" </code></pre>
+            <li>Now let's expore it</li> 
+            <img src="assets/images/hackday_chall_whatwasidoing1.png">
+            <p>The assignment probably indicate that we have to search browser history so we will search it</p>
+            <img src="assets/images/hackday_chall_whatwasidoing2.png">
+            <p>Nice we have found firefox<p>
+            <li>Now we will search where is stored browser history, probably in ".mozilla/firefox/xtet5yft.default-esr" </li>
+            <li>Following some website we will extract strings from places.sqlite</li> 
+            <p>We will grep only useful data </p>
+            <img src="assets/images/hackday_chall_whatwasidoing3.png">
+            <p>There is the flag</p>
+            <h2>Flag</h2>
+            <p class="flag">HACKDAY{htTPs://hAckD@y.fR/CHaL13nG3}</p>
+            <p>NB : Don't forget do unmount and disconnect : </p>
+            <pre><code class="language-python">umount /mnt/"mount_point" 
+            | qemu-nbd --disconnect /dev/nbd0
+            | rmmod nbd</code></pre>
+    </div>
+</body>
+</html>

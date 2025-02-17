@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copperwire Extraction</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="prism.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="assets/icons/tomato.png" alt="Tomate">
+            <div class="pseudo">Nektow</div>
+        </div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="tools.html">Tools</a></li>
+            <li><a href="history.html">History</a></li>
+        </ul>
+        <div class="social-icons">
+            <a href="#"><img src="assets/icons/tryhackme.png" alt="TryHackMe"></a>
+            <a href="#"><img src="assets/icons/rootme.png" alt="RootMe"></a>
+            <a href="#"><img src="assets/icons/hackthebox.png" alt="HackTheBox"></a>
+        </div>
+    </div>   
+    <div class="main-content">
+        <h1>Copperwire Extraction</h1>
+        <p>An intern in cybersecurity at the London police department has discovered that files were exfiltrated from their database. He managed to retrieve the queries used but needs help from someone really skilled in cybersecurity to figure it out!</p>
+        <h2>Writeup</h2>
+        <p>Here is the step by step solution</p>
+        <ol>
+            <li>Download the <a href="https://github.com/ChallengeHackDay/qualif-2025/raw/refs/heads/main/FORENSIC/Copperwire%20Extraction/chall/capture.pcapng">pcap file </a></li>
+            <li>Open it with Wireshark</li>
+        </ol>
+        <img src="assets/images/hackday_chall_copperwire.png">
+        <p>If we refer to the description of the challenge, we see that there seems to be an exfiltration.</p>
+        <p>We see that we have a cookie in the header which contains a base64 value <p>
+        <p>If we convert it we discover some interresting data <p>
+        <img src="assets/images/hackday_chall_copperwire1.png">
+        <p> It seems to be a PNG file, if we open it we will find a picture wich contains a letter, probably the flag's first few characters <p>
+        <img src="assets/images/hackday_chall_copperwire2.png">
+        <p> Let's continue with the second cookie ! <p>
+        <img src="assets/images/hackday_chall_copperwire3.png">
+        <p>It is not recognized as a PNG file, why? Because it is not one! Each PNG file starts with its start signature "89 50 4E 47 0D 0A 1A 0A" and ends with its end signature IEND "49 45 4E 44" and currently this is not the case. This is probably because the first one was not complete (it’s doesn't end with IEND) so we will use tshark to extract each cookie value base64 -d to decode them and foremost to extract every files in oneline it's look like that :  </p>
+        <pre><code class="language-python"> tshark -r capture.pcapng -Y "http.cookie" -T fields -e http.cookie | 
+        sed 's/^[^=]*=//' |
+        base64 -d &gt  base64_decode_output && foremost base64_decode_output
+        </code></pre>
+        <p> Now we have a directory wich contains 17 PNG we just have to assemble it<p>
+        <img src="assets/images/hackday_chall_copperwire4.png">
+        <h2>Flag</h2>
+        <p> After assembling every picture there is the flag ! </p>
+        <p class="flag">HACKDAY{D4t4-Exf1Ltr@t10n}<p>
+    </div>
+</body>
+</html>

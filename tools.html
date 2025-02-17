@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="prism.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="assets/icons/tomato.png" alt="Tomate">
+            <div class="pseudo">Nektow</div>
+        </div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="tools.html">Tools</a></li>
+            <li><a href="history.html">History</a></li>
+        </ul>
+        <div class="social-icons">
+            <a href="#"><img src="assets/icons/tryhackme.png" alt="TryHackMe"></a>
+            <a href="#"><img src="assets/icons/rootme.png" alt="RootMe"></a>
+            <a href="#"><img src="assets/icons/hackthebox.png" alt="HackTheBox"></a>
+        </div>
+    </div>
+    <div class="main-content">
+        <h1>Tools Cheat Sheet</h1>
+        
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search a tool..." onkeyup="filterTools()">
+        </div>
+
+        <div class="tools-grid" id="toolsGrid">
+            <div class="tool-card" onclick="expandTool(this)" data-category="network">
+                <div class="tool-summary">
+                    <h2>Nmap</h2>
+                    <p>Nmap is an open-source network scanning tool</p>
+                    <span class="category">Network Scanning</span>
+                    <a href="https://github.com/nmap/nmap" target="_blank">Github</a>
+                </div>
+                <div class="tool-details">
+                    <h3>Description</h3>
+                    <p>Nmap (Network Mapper) is an open-source network scanning tool used to discover hosts and services on a computer network. It is primarily used by system administrators and cybersecurity professionals for security audits and vulnerability assessments.</p>
+                    <h3>Basic use :</h3>
+                    <pre><code class="language-python">nmap -sC -sV -Pn -T5 -top-ports 1000 localhost</code></pre>
+                    <p>
+                    -sC Scan with default NSE scripts.
+                    </br>
+                    </br>
+                    -sV Try to guess version's services.
+                    </br>
+                    </br>
+                    -Pn Skip host discovery
+                    </br>
+                    </br>
+                    -T5 Speed mode (T0-T5) T5 is the fastest
+                    </br>
+                    </br>
+                    -top-ports 1000 Scans the 1000 most popular ports
+                    <img src="assets/images/nmap_01.png">
+                    <p>If you are on a sensitive environment you can use only non intrusive script with : </p>
+                    <pre><code class="language-python">nmap -script "not intrusive" localhost </code></pre/>
+                    <p>You can also specify a script :</p>
+                    <pre><code class="language-python">nmap -script=http-enum,http-feed  localhost </code></pre/>
+                    <p>Find all nmap scripts <a href="https://nmap.org/nsedoc/scripts/" target="_blank">there </a></p>
+                    <p>Spoof your IP with -D</p>
+                    <pre><code class="language-python">nmap -D 192.168.1.101,192.168.1.102 localhost</code></pre>
+                    <p>OS detection -O</p>
+                    <pre><code class="language-python">nmap -O localhost</code></pre>
+                    <img src="assets/images/nmap_02.png">
+                    <p>NB : You can use -A to enables OS detection, version detection, script scanning, and traceroute</p>
+                    <pre><code class="language-python">nmap -A localhost</code></pre>
+                    <img src="assets/images/nmap_03.png">
+                </div>
+            </div>
+
+            <!-- Outil 2 : John the Ripper -->
+            <div class="tool-card" onclick="expandTool(this)" data-category="forensic">
+                <div class="tool-summary">
+                    <h2>John the Ripper</h2>
+                    <p>Un outil de cassage de mots de passe.</p>
+                    <span class="category">Forensic</span>
+                    <a href="https://github.com/openwall/john" target="_blank">Github</a>
+                </div>
+                <div class="tool-details">
+                    <h3>Description</h3>
+                    <p>John the Ripper est un outil de cassage de mots de passe rapide et efficace. Il supporte de nombreux algorithmes de hachage et peut être utilisé pour tester la robustesse des mots de passe.</p>
+                    <h3>Exemples d'utilisation</h3>
+                    <pre><code>john --wordlist=passwords.txt hash.txt</code></pre>
+                    <pre><code>john --format=raw-md5 hash.txt</code></pre>
+                    <h3>Captures d'écran</h3>
+                    <img src="assets/images/john-screenshot.png" alt="Capture d'écran de John the Ripper">
+                </div>
+            </div>
+            <div class="tool-card" onclick="expandTool(this)" data-category="bruteforce">
+                <div class="tool-summary">
+                    <h2>Hydra</h2>
+                    <p>Hydra is a login cracker </p> 
+                    <span class="category">Login bruteforce</span>
+                    <a href="https://salsa.debian.org/pkg-security-team/hydra" target="_blank">Source Code</a>
+                </div>
+                <div class="tool-details">
+                    <h3>Description</h3>
+                    <p>Hydra is a parallelized login cracker which supports numerous protocols to attack. It is very fast and flexible, and new modules are easy to add.</p>
+                    <h3>How use it ?</h3>
+                    <p>Basic example :</p>
+                    <p>SMB Brute Forcing </p>
+                    <pre><code class="language-python">hydra -L "usernames.txt" -P "passwords.txt" smb://IP -V -f </code></pre>
+                    <p>-V verbose (show login/pass for each attempt
+                    </br>
+                    </br>
+                    -f exit when a login/pass pair is found
+                    </p>
+                    <p>LDAP Brute Forcing</p>
+                    <pre><code class="language-python">hydra -L users.txt -P passwords.txt ldap2://IP -V -f</code></pre>
+                    <p>FTP Password Brute Forcing</p>
+                    <pre><code class="language-python">hydra -l "username" -P /usr/share/worldlist/rockyou.txt ftp://IP</code></pre>
+                    <p>SSH Password Brute Forcing </p>
+                    <pre><code class="language-python">hydra -l "username" -P /usr/share/worldlist/rockyou.txt ssh://IP</code></pre>
+                    <p>You can also specify a port with -s "port" : </p>
+                    <pre><code class="language-python">hydra -l "username" -P /usr/share/worldlist/rockyou.txt ssh://IP -s 12345</code></pre>
+                    <p>HTTP POST Login AND Password Bruteforce : </p>
+                    <pre><code class="language-python">hydra -L username.txt -P passlist.txt http-post-form "http://IP/login.php:username=^USER^&password=^PASS^:F=error"</code></pre>
+                    <p>
+                    http-post-form is for specify an http method
+                    </br>
+                    </br>
+                    login.php is your entry point
+                    </br>
+                    </br>
+                    'username' is the name of the username field in the connection form
+                    </br>
+                    </br>
+                    'password' is the name of the password field in the connection form
+                    </br>
+                    </br>
+                    'error' is a word contained in the page when the connection fails.
+                    </p>
+                </div>
+            </div>
+
+            <div class="tool-card" onclick="expandTool(this)" data-category="web">
+                <div class="tool-summary">
+                    <h2>ffuf</h2>
+                    <p>A fast web fuzzer written in Go</p>
+                    <span class="category">Web</span>
+                    <a href="https://github.com/ffuf/ffuf" target="_blank">Github</a>
+                </div>
+                <div class="tool-details">
+                    <h3>Description</h3>
+                    <p>ffuf is a fast web fuzzer written in Go that allows typical directory discovery, virtual host discovery (without DNS records) and GET and POST parameter fuzzing.</p>
+                    <h3>How use it ?</h3>
+                    <p>Basic example :</p>
+                    <pre><code class="language-python">ffuf -u "url/FUZZ" -w "worldlist"
+</code></pre>
+                    <img src="assets/images/ffuf_01.png">
+                    <p>NB: You can use the <a href="https://github.com/danielmiessler/SecLists" target="_blank" > Seclist repo </a></p>
+                    <p>Let's use more specific parameters  : 
+                        </br>
+                        </br>
+                        -H "Specify a header"
+                        </br>
+                        -X "Specify a request method"
+                        </br>
+                        -fl 1 "Exclude every response which contains 1 line"
+                        </br>
+                        -fr error "Exculde every response which contains 'error' "
+                        </br>
+                        -fc 400-500 "Exculde every response with a status codes between 400-500"
+                        </br>
+                        -mc 200 "Match every response with the statut code '200'
+                    </p>
+                    <pre><code class="language-python">ffuf -u 'http://localhost:8000/FUZZ' -w /usr/share/worldlist/SecLists/Discovery/Web-Content/common.txt -H "User-Agent: Mozilla/5.0" -X GET -fl 1 -fr "error" -fc 400-500 -mc 200 </code></pre>
+                    <img src="assets/images/ffuf_02.png">
+                    <p>Now with POST method : </p>
+                    <pre><code class="language-python">ffuf -u 'http://localhost:8000/FUZZ' -w /usr/share/worldlist/SecLists/Discovery/Web-Content/common.txt -H "User-Agent: Mozilla/5.0" -X POST -d '{"user":"JohnDoe", "password":"azerty"}' -fl 1 -fr "error" -fc 400-500 -mc 200</code></pre>
+                    <img src="assets/images/ffuf_03.png">
+                    <p>You can even specify a cookie with -b : </p>
+                    <pre><code class="language-python">ffuf -u 'http://localhost:8000/FUZZ' -w /usr/share/worldlist/SecLists/Discovery/Web-Content/common.txt -b "PHPSESSION=aWxvdmVzYWxhZAo="</code></pre> 
+                    <p>You also have the same feature than burpsuite with sqlmap, you can use a request directly (Really Useful) : </p>
+                     <pre><code class="language-python">ffuf -request request.rq -u 'http://localhost:8000/FUZZ' -w /usr/share/worldlist/SecLists/Discovery/Web-Content/common.txt </code></pre> 
+                    <img src="assets/images/ffuf_04.png">
+                    <p> You can obviously use ffuf to try some LFI </p>
+                    <pre><code class="language-python">ffuf -request request.rq -u 'http://localhost:8000/index.php?page=FUZZ' -w /usr/share/worldlist/SecLists/Fuzzing/LFI/LFI-linux-and-windows_by-1N3@CrowdShield.txt</code></pre>
+                </div>
+            </div>
+
+            <div class="tool-card" onclick="expandTool(this)" data-category="forensic">
+                <div class="tool-summary">
+                    <h2>Volatility</h2>
+                    <p>
+                        Tool for analysis volatile memory 
+                    </p>
+                    <span class="category">Forensic</span>
+                    <a href="https://github.com/volatilityfoundation/volatility" target="_blank">Github</a>
+                </div>
+                <div class="tool-details">
+                    <h3>Description</h3>
+                    <p>The Volatility Framework is a completely open collection of tools,
+implemented in Python under the GNU General Public License, for the
+extraction of digital artifacts from volatile memory (RAM) samples.
+The extraction techniques are performed completely independent of the
+system being investigated but offer visibilty into the runtime state
+of the system. The framework is intended to introduce people to the
+techniques and complexities associated with extracting digital artifacts
+from volatile memory samples and provide a platform for further work into
+this exciting area of research.
+                    </p>
+                    <h3>How use it ?</h3>
+                    <pre><code class="language-python">python2 vol.py -f "file" imageinfo</code></pre>
+                    <p>Get the best profiles</p>
+                    <img src="assets/images/vol_image_info.png" alt="Imageinfo from volatility">
+                    <p>Select the better one, there we chose Win7SP1x64 and launch "pstree"</p>
+                    <pre><code class="language-python">python2 vol.py -f <file> --profile="Profile" pstree</code></pre>
+                    <p>Pstree is used to have a clean arborescence of every processus launch in the image.</p>
+                    <img src="assets/images/vol_pstree.png" alt="PsTree from volatility">
+                    <pre><code class="language-python">python2 vol.py -f "file" --profile="Profile" cmdline</code></pre>
+                    <p>Show command line arguments. </p>
+                    <img src="assets/images/vol_cmdline.png" alt="Cmdline from volatility">
+                    <pre><code class="language-python">python2 vol.py -f "file" --profile="Profile" filescan</code></pre>
+                    <p> List every files loaded in memory </p>
+                    <img src="assets/images/vol_filescan.png" alt="Filescan from volatility">
+                    <pre><code class="language-python">python2 vol.py -f "file" --profile="Profile" clipboard</code></pre>
+                    <p>Dump every loaded clipboard.</p>
+                    <img src="assets/images/vol_clipboard.png" alt="Clipboard from volatility">
+                    <pre><code class="language-python">python2 vol.py -f "file" --profile="Profile" netscan</code></pre>
+                    <p>Enumerate network communication</p>
+                    <img src="assets/images/vol_netscan.png" alt="Clipboard from volatility">
+                    <p>Some others usefull commands : </p>
+                    <li>Recover Internet history</li>
+                    <pre><code class="language-python">python2 vol.py -f "file" --profile="Profile" iehistory </code></pre>
+                    <li>Dump TrueCrypt Passphrase </li>
+                    <pre><code class="language-python">python2 vol.py -f "file" --profile="Profile" truecryptpassphrase </code></pre>
+                    <li>Extract TrueCrypt master keys </li>
+                    <pre><code class="language-python">python2 vol.py -f "file" --profile="Profile" ruecryptmaster </code></pre>
+                    <li>Dump all valid pages to a single file</li>
+                    <pre><code class="language-python">python2 vol.py -f ch2.dmp --profile="Profile" memdump -p "PID" --dump-dir "Output Path" </code></pre>
+                    <li>Dump a processu with his pid</li>
+                    <pre><code class="language-python">python2 vol.py -f ch2.dmp --profile="Profile" procdump -p "PID" --dump-dir "Output Path" </code></pre>
+                    <li>Dump LSA Hashes</li>
+                    <pre><code class="language-python">python2 vol.py -f ch2.dmp --profile="Profile" lsadump</code></pre>
+                    <li>Dump LM and NTLM hashes </li>
+                    <pre><code class="language-python">python2 vol.py -f ch2.dmp --profile="Profile" hashdump </code></pre>
+                    <li>Identify suspicious data in processus </li>
+                    <pre><code class="language-python">python2 vol.py -f ch2.dmp --profile="Profile" malfind</code></pre>
+                    <p> If you need the official Cheat Sheet : <a href="https://downloads.volatilityfoundation.org/releases/2.4/CheatSheet_v2.4.pdf" target="_blank">Cheat Sheet V2.4</a>
+                </div>
+            </div>
+
+            <div class="tool-card" onclick="expandTool(this)" data-category="réseau">
+                <div class="tool-summary">
+                    <h2>Wireshark</h2>
+                    <p>Un analyseur de paquets pour inspecter le trafic réseau.</p>
+                    <span class="category">Réseau</span>
+                    <a href="https://github.com/wireshark/wireshark" target="_blank">Github</a>
+                </div>
+                <div class="tool-details">
+                    <h3>Description</h3>
+                    <p>Wireshark est un analyseur de paquets open source utilisé pour le dépannage réseau, l'analyse de protocoles, et l'éducation.</p>
+                    <h3>Exemples d'utilisation</h3>
+                    <pre><code>wireshark -k -i eth0</code></pre>
+                    <h3>Captures d'écran</h3>
+                    <img src="assets/images/wireshark-screenshot.png" alt="Capture d'écran de Wireshark">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+    function collapseAllTools() {
+        const toolCards = document.getElementsByClassName('tool-card');
+        for (let i = 0; i < toolCards.length; i++) {
+            toolCards[i].classList.remove('expanded'); 
+            toolCards[i].style.display = ''; 
+        }
+    }
+    function filterTools() {
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        const toolsGrid = document.getElementById('toolsGrid');
+        const toolCards = toolsGrid.getElementsByClassName('tool-card');
+
+        for (let i = 0; i < toolCards.length; i++) {
+            const toolName = toolCards[i].getElementsByTagName('h2')[0].textContent.toLowerCase();
+            const toolDescription = toolCards[i].getElementsByTagName('p')[0].textContent.toLowerCase();
+            const toolCategory = toolCards[i].getAttribute('data-category').toLowerCase();
+
+            const keywords = input.split(' ');
+            const matches = keywords.every(keyword =>
+                toolName.includes(keyword) ||
+                toolDescription.includes(keyword) ||
+                toolCategory.includes(keyword)
+            );
+
+            if (matches) {
+                toolCards[i].style.display = ''; 
+            } else {
+                toolCards[i].style.display = 'none'; 
+            }
+        }
+    }
+    function expandTool(clickedTool) {
+        const toolCards = document.getElementsByClassName('tool-card');
+        for (let i = 0; i < toolCards.length; i++) {
+            if (toolCards[i] === clickedTool) {
+                if (!toolCards[i].classList.contains('expanded')) {
+                    toolCards[i].classList.add('expanded'); 
+                }
+            } else {
+                toolCards[i].style.display = 'none'; 
+            }
+        }
+    }
+
+    document.getElementById('searchInput').addEventListener('focus', () => {
+        collapseAllTools();
+    });
+
+    document.getElementById('searchInput').addEventListener('input', () => {
+        filterTools();
+    });
+    </script>
+    </body>
+</html>

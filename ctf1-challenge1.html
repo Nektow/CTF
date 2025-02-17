@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Watchful Gears: Uncover the Secrets Within</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="prism.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="assets/icons/tomato.png" alt="Tomate">
+            <div class="pseudo">Nektow</div>
+        </div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="tools.html">Tools</a></li>
+            <li><a href="history.html">History</a></li>
+        </ul>
+        <div class="social-icons">
+            <a href="#"><img src="assets/icons/tryhackme.png" alt="TryHackMe"></a>
+            <a href="#"><img src="assets/icons/rootme.png" alt="RootMe"></a>
+            <a href="#"><img src="assets/icons/hackthebox.png" alt="HackTheBox"></a>
+        </div>
+    </div>   
+    <div class="main-content">
+        <h1>The Watchful Gears: Uncover the Secrets Within</h1>
+        <p>This website clearly hides a lot of things... be careful, it seems the administrator of this website is monitoring activity! Proceed slowly but surely...</p>
+        <img src="assets/images/hackday_chall_thorderofgears.png">
+        <h2>Writeup</h2>
+        <p>Here is the step by step solution</p>
+            <li>Inspect source code.</li>
+            <img src="assets/images/hackday_chall_thorderofgears1.png">
+            <li>Find the directory containing the picture.</li>
+            <img src="assets/images/hackday_chall_thorderofgears2.png">
+            <li>Access the directory</li>
+            <img src="assets/images/hackday_chall_thorderofgears3.png">
+            <li>Open the new file that you just found</li>
+            <img src="assets/images/hackday_chall_thorderofgears4.png">
+            <li>Check the source code again</li>
+            <img src="assets/images/hackday_chall_thorderofgears5.png">
+            <li>Extract and deobfuscate the javascript function using <a href="https://lelinhtinh.github.io/de4js/">lelinhtinh project</a> </li>
+            <img src="assets/images/hackday_chall_thorderofgears6.png">
+            <p>It appears that there are 2 variables, one with base64 values (_0xa92bf2) and the other with table indexes (_0x9cb483). At the end we see that the table of values is called and compared in a precise order (the values of the 2nd table [0, 2, 3, 1, 4]). We will then assemble the values in base64 following this order.
+            </p>
+            <li>And now we just have to decode it using cyberchef for example</li>
+            <img src="assets/images/hackday_chall_thorderofgears7.png">
+            <p></p>
+            <li>Now we have to verify in the website</li>
+            <img src="assets/images/hackday_chall_thorderofgears8.png">
+            <p>Looks good but we still haven't found the flag. They said that we have the PATH probably a web path right ? </p>
+            <li>Let's navigate to http://challenges.hackday.fr:37784/g3dMNMNDNybl_GXX_U/ </li>
+            <img src="assets/images/hackday_chall_thorderofgears9.png">
+            <h2>Flag</h2>
+            <p class="flag">HACKDAY{ec4975e152bef92b2105681fd80f0c0e}</p>
+    </div>
+</body>
+</html>

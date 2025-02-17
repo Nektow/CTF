@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The analytical engine leak</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="prism.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="assets/icons/tomato.png" alt="Tomate">
+            <div class="pseudo">Nektow</div>
+        </div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="tools.html">Tools</a></li>
+            <li><a href="history.html">History</a></li>
+        </ul>
+        <div class="social-icons">
+            <a href="#"><img src="assets/icons/tryhackme.png" alt="TryHackMe"></a>
+            <a href="#"><img src="assets/icons/rootme.png" alt="RootMe"></a>
+            <a href="#"><img src="assets/icons/hackthebox.png" alt="HackTheBox"></a>
+        </div>
+    </div>   
+    <div class="main-content">
+        <h1>The analytical engine leak</h1>
+        <p> In the shadow of the huge copper chimneys, a dark plot is brewing. The engineers of the Inventors' Guild have developed a revolutionary device: a steam-powered analytical machine capable of deciphering all secret codes. But before it could be activated, a group of cyber-saboteurs, the Black Mist, infiltrated its network to steal the plans. Fortunately, the plans were encrypted.
+        </br>
+        </br>
+        An allied spy intercepted a trail leading to the Steam Station's digital archives, where a secret database stores crucial information for deciphering the device's plans. However, access is restricted, and only a few people can extract the contents.
+        </br>
+        </br>
+        Your mission: exploit a flaw in the system to recover the encryption key before it falls into the wrong hands. To avoid alerting an archivist, the use of automatic tools is prohibited. Manual exploitation only.
+        </br>
+        </br>
+        no sqlmap or things like that allowed
+        <p>
+        <img src="assets/images/hackday_chall_theanalyticalengineleak.png">
+        <h2>Writeup</h2>
+        <p>Here is solution's steps :</p>
+            <li>We will a try a basic SQLI using "admin" username</li>
+            <img src="assets/images/hackday_chall_theanalyticalengineleak1.png">
+            <p>Nice, i'm actually connected as admin but it don't give me anything else, but now i can exfiltrate some data maybe... </p>
+            <li>I will try to find how many columns there is</li>
+            <img src="assets/images/hackday_chall_theanalyticalengineleak2.png">
+            <p>Three ! </p>
+            <li>Now i will find some useful tables</li>
+            <img src="assets/images/hackday_chall_theanalyticalengineleak3.png">
+            <img src="assets/images/hackday_chall_theanalyticalengineleak4.png">
+            <p>The last one seem's to be a manually added one </p>
+            <li>Now we have to find every columns in it</li>
+            <pre><code class="language-sql">admin' UNION SELECT column_name,2,3 FROM information_schema.columns WHERE table_name='blueprints' -- - </pre></code>
+            <img src="assets/images/hackday_chall_theanalyticalengineleak5.png">
+            <li>Let's display description columns </li>
+            <img src="assets/images/hackday_chall_theanalyticalengineleak6.png">
+            <p>We have some interesting data "W5HWRxWbZM7AUhxgfRwZg58ANQFKgMwutG" looks supicious</p>
+            <li>Cyberchef will help us there ! </li>
+            <img src="assets/images/hackday_chall_theanalyticalengineleak7.png">
+            <p>That's it we have the flag </p> 
+            <h2>Flag</h2>
+            <p class="flag">HACKDAY{$ea5y_INjeCTion$}</p>
+    </div>
+</body>
+</html>
