@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tonalyzer</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="prism.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="assets/icons/tomato.png" alt="Tomate">
+            <div class="pseudo">Kenoor</div>
+        </div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="tools.html">Tools</a></li>
+            <li><a href="history.html">History</a></li>
+        </ul>
+        <div class="social-icons">
+            <a href="#"><img src="assets/icons/tryhackme.png" alt="TryHackMe"></a>
+            <a href="#"><img src="assets/icons/rootme.png" alt="RootMe"></a>
+            <a href="#"><img src="assets/icons/hackthebox.png" alt="HackTheBox"></a>
+        </div>
+    </div>   
+    <div class="main-content">
+        <h1>Tonalyzer</h1>
+        <p>Mysterious frequencies have surfaced in the depths of Neon City.
+Will you succeed in uncovering its secret ? It has to mean something...</p>
+        <h2>Writeup</h2>
+        <p>Here is the step by step solution</p>
+            <li>Firstly let's launch a file to see if it's a real one</li>
+            <img src="assets/images/midnight_chall_tonalyzer1.png">
+            <p>Which is recognize as a audio file.
+            The first listening provides us a lot of informations, it's seems to
+            be phone beep's.
+            </p>
+        <li>With some search we find : DTMF Code </li>
+        <p>It's a way to communicate using audio canals</p>
+        <img src="assets/images/midnight_chall_tonalyzer2.png">
+        <li>Using Audacity with spectrogram view we find a good look to use the
+            table</li>
+        <img src="assets/images/midnight_chall_tonalyzer3.png">
+        <p>We can clearly see lines and "tics"<p>
+        <li>Now we have ton convert frequency of audio waves to numbers</li>
+        <p>We got something like that : 
+        </br>
+        </br>
+        1209 770 : 4
+        </br>
+        1477 697 : 3
+        </br>
+        1477 770 : 6
+        </br>
+        1209 770 : 4
+        </br>
+        1477 770 : 6
+        </br>
+        1336 852 : 8
+        </br>
+        1477 770 : 6
+        </br>
+        1477 697 : 3
+        </br>
+        1209 852 : 7
+        </p>
+        <p> But using this "time unit" we can repeat keys X times. For example
+        the frist one (4) will be repeated 5 times. So we got : 44444 3333 66 333 66 8 66666 33 7777
+        </p>
+        <p> But now if you are familiar with with old phone keyboard, it
+            doesn't have much letter on keys, the maximum is 3 or 4 not 5. So we
+            need to split it correctly.
+        </p>
+        <img src="assets/images/midnight_chall_tonalyzer4.png">
+        <li> After some try we found some english words like 
+        </br> 
+        44 444 3 3 33 66 become "HIDDEN"
+        </br>
+        444 66 8 666 66 33 7777 become "INTONES"
+        </li>  
+        <p class="flag">MCTF{HIDDENINTONES}</p>
+    </div>
+</body>
+</html>

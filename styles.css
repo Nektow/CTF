@@ -400,6 +400,12 @@ a {
 .tool-card[data-category="forensic"] .category {
     background-color: #2196f3; /* Bleu */
 }
+
+.challenge-card[data-category="steganography"] .category,
+.tool-card[data-category="steganography"] .category {
+    background-color: #4B0082; /* Indigo foncé */
+}
+
 .challenge-card[data-category="web"] .category,
 .tool-card[data-category="web"] .category {
     background-color: #f44336; /* Rouge */
